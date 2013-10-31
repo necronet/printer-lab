@@ -49,8 +49,11 @@ public class BluetoothHelper {
 		return pairedDevices;
 	}
 	
-	public void setOnBuetoothHelperEventListener (BluetoothHelperEventListener eventListener) {
+	
+	
+	public BluetoothHelper setOnBuetoothHelperEventListener (BluetoothHelperEventListener eventListener) {
 		this.eventListener = eventListener;
+		return this;
 	}
 	
 	public interface BluetoothHelperEventListener {

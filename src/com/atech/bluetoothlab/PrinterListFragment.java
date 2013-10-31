@@ -1,5 +1,8 @@
 package com.atech.bluetoothlab;
 
+import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,10 +13,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import com.atech.bluetoothlab.BluetoothHelper.BluetoothHelperEventListener;
 
+public class PrinterListFragment extends Fragment implements OnItemClickListener, BluetoothHelperEventListener{
 
-public class PrinterListFragment extends Fragment implements OnItemClickListener{
-
+	private static final String TAG = "DEBUG ";  
+	private static final int REQUEST_ENABLE_BT = 200;
 	private BluetoothPrinterAdapter adapter;
 	private ListView list; 
 	
@@ -23,7 +28,10 @@ public class PrinterListFragment extends Fragment implements OnItemClickListener
 		
 		View view = inflater.inflate(R.layout.printer_list, container, false);
 		list = (ListView) view.findViewById(R.id.list);
-		adapter = new BluetoothPrinterAdapter(getActivity(), BluetoothHelper.instance().getPairedDevices());
+		
+		BluetoothHelper helper = BluetoothHelper.instance().setOnBuetoothHelperEventListener(this);;
+		
+		adapter = new BluetoothPrinterAdapter(getActivity(), helper.getPairedDevices());
 		list.setAdapter(adapter);
 		list.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 		list.setOnItemClickListener(this);
@@ -31,10 +39,34 @@ public class PrinterListFragment extends Fragment implements OnItemClickListener
 		
 		return view;
 	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == REQUEST_ENABLE_BT) {
+			switch(resultCode) {
+				case Activity.RESULT_OK:
+					//handle okish state
+					break;
+				case Activity.RESULT_CANCELED:
+					//handle cancellation
+					break;
+					
+			}
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
 
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 		list.setItemChecked(position, true);
+	}
+
+	
+	//in case that bluetooth is not enabled
+	@Override
+	public void bluetoothNotEnable(BluetoothHelper helper) {
+		Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+	    startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
 	}
 	
 	
