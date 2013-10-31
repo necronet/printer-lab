@@ -19,9 +19,10 @@ public class PrinterActivity extends FragmentActivity {
 			
 		} else {
 			PrinterActionListFragment actionFragment = new PrinterActionListFragment();
-			getSupportFragmentManager().beginTransaction()
-					.add(android.R.id.content, actionFragment, "main")
-					.addToBackStack(null).commit();
+			Bundle args = new Bundle();
+			args.putBoolean("selected", true);
+			actionFragment.setArguments(args);
+			getSupportFragmentManager().beginTransaction().add(android.R.id.content, actionFragment, "main").addToBackStack(null).commit();
 		}
 	}
 
