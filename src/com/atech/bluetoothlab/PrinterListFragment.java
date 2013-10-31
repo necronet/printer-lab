@@ -59,6 +59,7 @@ public class PrinterListFragment extends Fragment implements OnItemClickListener
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 		list.setItemChecked(position, true);
+		((PrinterActivity)getActivity()).deviceSelected(adapter.getItem(position));
 	}
 
 	

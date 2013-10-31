@@ -4,5 +4,11 @@
     <string name="app_name">Bluetooh printer lab</string>
     <string name="empty_action">Please pick a device to execute action in it</string>
     
+    <string-array name="actions">
+        <item>Print Hello world</item>
+        <item>Print an invoice</item>
+        <item>Print an invoice with barcode</item>
+        <item>Print an invoice with an image</item>
+    </string-array>
 
 </resources>
