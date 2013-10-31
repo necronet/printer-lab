@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">Bluetooh printer lab</string>
+    <string name="empty_action">Please pick a device to execute action in it</string>
     
 
 </resources>
