@@ -1,0 +1,35 @@
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+
+#Ignore key certified class
+*.key
+key/*
+
+#Build ignore files
+.gradle/*
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Eclipse project files
+*.classpath
+*.project
+*.settings
+
+#Ignore intelliJ file
+*.iml
+.idea
+
+#Mac base files
+.DS_Store
