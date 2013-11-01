@@ -13,6 +13,9 @@ public class PrinterActivity extends FragmentActivity {
 	}
 
 	public void deviceSelected(BluetoothDevice item) {
+		//try to connect to this device
+		BluetoothHelper.instance().connectTo(item);
+		
 		if (isTablet()) {
 			PrinterActionListFragment actionFragment = (PrinterActionListFragment)getSupportFragmentManager().findFragmentByTag("detail");
 			actionFragment.displayActions();
