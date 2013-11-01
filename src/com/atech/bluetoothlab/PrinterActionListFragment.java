@@ -16,18 +16,21 @@ public class PrinterActionListFragment extends Fragment implements
 
 	private ArrayAdapter<String> adapter;
 	private TextView textProgress;
+	private boolean displayActions = false;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		
 		View view = inflater.inflate(R.layout.action_list, container, false);
 		return view;
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
+		
 		super.onActivityCreated(savedInstanceState);
+		
 		adapter = new ArrayAdapter<String>(getActivity(),
 				android.R.layout.simple_list_item_1, getResources()
 						.getStringArray(R.array.actions));
@@ -39,12 +42,24 @@ public class PrinterActionListFragment extends Fragment implements
 
 		list.setOnItemClickListener(this);
 
+		
+		if (savedInstanceState != null) {
+			displayActions = savedInstanceState.getBoolean("displayActions");
+			displayActions(!displayActions);
+		} else {
 		Bundle args = getArguments();
 		if (args != null && args.containsKey("selected")) {
 			connectingToDevice();
 		}
+		}
 	}
-
+	
+@Override
+public void onSaveInstanceState(Bundle outState) {
+	outState.putBoolean("displayActions", displayActions);
+	super.onSaveInstanceState(outState);
+}
+	
 	public void connectingToDevice() {
 		getView().findViewById(R.id.empty).setVisibility(View.GONE);
 		getView().findViewById(R.id.list).setVisibility(View.GONE);
@@ -52,7 +67,7 @@ public class PrinterActionListFragment extends Fragment implements
 	}
 
 	public void displayActions(boolean error) {
-
+		displayActions = !error;
 		getView().findViewById(R.id.empty).setVisibility(View.GONE);
 
 		if (error) {
