@@ -3,47 +3,47 @@ package com.atech.bluetoothlab;
 import java.io.IOException;
 import java.util.UUID;
 
-import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.os.Handler;
 import android.util.Log;
 
 public class ConnectThread extends Thread {
 
 	private static final String TAG = "ConnectThread";
 	
-	private BluetoothSocket socket;
-	private BluetoothDevice device;
+	private BluetoothSocket mSocket;
+	private BluetoothDevice mDevice;
+	private Handler mHandler;
 
-	public ConnectThread(BluetoothDevice device, UUID deviceUUID) {
+	public ConnectThread(BluetoothDevice device, UUID deviceUUID, Handler handler) {
 		BluetoothSocket tmp = null;
-		this.device = device;
+		this.mDevice = device;
+		mHandler = handler;
 		// Get a BluetoothSocket to connect with the given BluetoothDevice
 		try {
 			tmp = device.createInsecureRfcommSocketToServiceRecord(deviceUUID);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		socket = tmp;
+		mSocket = tmp;
 	}
 
 
 	@Override
 	public void run() {
-		BluetoothHelper helper = BluetoothHelper.instance();
-		if (helper != null && helper.getBluetoothAdapter().isDiscovering()) {
-			// before doing a connect if an adapter was set to us we cancel the
-			// discovery of any new devices
-			helper.getBluetoothAdapter().cancelDiscovery();
+		
+		if (mHandler != null ) {
+			mHandler.sendEmptyMessage(BluetoothHelper.CANCEL_DISCOVERY);
 		}
 
 		try {
 			// Connect the device through the socket. This will block
 			// until it succeeds or throws an exception
-			socket.connect();
+			mSocket.connect();
 		} catch (IOException connectException) {
 			Log.e(TAG,"connection could not be stablished due to: " + connectException.getMessage());
-			helper.connectionFailed(connectException);
+			mHandler.sendEmptyMessage(BluetoothHelper.CONNECTION_FAILED);
 			cancel();
 			return;
 		}
@@ -53,7 +53,7 @@ public class ConnectThread extends Thread {
 	/** Will cancel an in-progress connection, and close the socket */
 	public void cancel() {
 		try {
-			socket.close();
+			mSocket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

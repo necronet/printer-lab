@@ -4,6 +4,7 @@
     <string name="app_name">Bluetooh printer lab</string>
     <string name="empty_action">Please pick a device to execute action in it</string>
     <string name="starting_connection">Connecting...</string>
+    <string name="connection_failed">Connection failed</string>
     
     <string-array name="actions">
         <item>Print Hello world</item>

@@ -9,12 +9,14 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class PrinterActionListFragment extends Fragment implements
 		OnItemClickListener {
 
 	private ArrayAdapter<String> adapter;
-
+	private TextView textProgress;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -30,28 +32,38 @@ public class PrinterActionListFragment extends Fragment implements
 				android.R.layout.simple_list_item_1, getResources()
 						.getStringArray(R.array.actions));
 
+		textProgress = (TextView)getView().findViewById(R.id.progress_text);
+		
 		ListView list = (ListView) getView().findViewById(R.id.list);
 		list.setAdapter(adapter);
 
 		list.setOnItemClickListener(this);
-		
+
 		Bundle args = getArguments();
-		if (args != null && args.containsKey("selected")) 
-		{
+		if (args != null && args.containsKey("selected")) {
 			connectingToDevice();
 		}
 	}
-	
+
 	public void connectingToDevice() {
 		getView().findViewById(R.id.empty).setVisibility(View.GONE);
 		getView().findViewById(R.id.list).setVisibility(View.GONE);
 		getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
 	}
 
-	public void displayActions() {
+	public void displayActions(boolean error) {
+
 		getView().findViewById(R.id.empty).setVisibility(View.GONE);
-		getView().findViewById(R.id.progress).setVisibility(View.GONE);
-		getView().findViewById(R.id.list).setVisibility(View.VISIBLE);
+
+		if (error) {
+			getView().findViewById(R.id.progress_bar).setVisibility(View.GONE);
+			getView().findViewById(R.id.sad_face).setVisibility(View.VISIBLE);
+			textProgress.setText(R.string.connection_failed);
+		} else {
+			getView().findViewById(R.id.sad_face).setVisibility(View.GONE);
+			getView().findViewById(R.id.list).setVisibility(View.VISIBLE);
+			getView().findViewById(R.id.progress).setVisibility(View.GONE);
+		}
 	}
 
 	@Override

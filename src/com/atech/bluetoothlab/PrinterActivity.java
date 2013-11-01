@@ -15,11 +15,11 @@ public class PrinterActivity extends FragmentActivity implements
 		BluetoothHelperEventListener {
 
 	private static final int REQUEST_ENABLE_BT = 200;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		BluetoothHelper.instance().setOnBuetoothHelperEventListener(this);
 		setContentView(R.layout.activity_printer_list);
 
@@ -61,23 +61,22 @@ public class PrinterActivity extends FragmentActivity implements
 	public boolean isTablet() {
 		return getResources().getBoolean(R.bool.is_tablet);
 	}
-	
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == REQUEST_ENABLE_BT) {
-			switch(resultCode) {
-				case Activity.RESULT_OK:
-					//handle okish state
-					break;
-				case Activity.RESULT_CANCELED:
-					//handle cancellation
-					break;
-					
+			switch (resultCode) {
+			case Activity.RESULT_OK:
+				// handle okish state
+				break;
+			case Activity.RESULT_CANCELED:
+				// handle cancellation
+				break;
+
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-
 
 	// in case that bluetooth is not enabled
 	@Override
@@ -93,16 +92,22 @@ public class PrinterActivity extends FragmentActivity implements
 			// if there is no bluetooth
 			break;
 		case CONNECTION_FAILED:
-			//when connection failed
+			// when connection failed
+			
+			PrinterActionListFragment actionFragment = (PrinterActionListFragment) getSupportFragmentManager()
+					.findFragmentById(isTablet() ? R.id.sub_main : R.id.main);
+
+			if (actionFragment != null) {
+				actionFragment.displayActions(true);
+			}
 			break;
 		}
 	}
 
 	@Override
 	public void bluetoothConnectionStart(ConnectThread connection) {
-
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		BluetoothHelper.instance().destroy();
