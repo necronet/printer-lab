@@ -11,7 +11,10 @@ import android.os.ParcelUuid;
 public class BluetoothHelper {
 
 	private static final String[] SUPPORTED_DEVICES = {"APEX3"};
-	
+	public enum BluetoothHelperEvent {
+		NOT_SUPPORTED,
+		NOT_ENABLED;
+	}
 	
 	private static BluetoothHelper instance;
 	private BluetoothAdapter mBluetoothAdapter;
@@ -42,18 +45,24 @@ public class BluetoothHelper {
 			
 			// Device does not support Bluetooth
 			if (!mBluetoothAdapter.isEnabled() && eventListener != null) {
-				eventListener.bluetoothNotEnable(this);//notify in case bluetooth is not enable
+				eventListener.bluetoothEventChange(BluetoothHelperEvent.NOT_ENABLED);//notify in case bluetooth is not enable
 			}
 	
 			//return the list of paired devices anyway
 			pairedDevices = new ArrayList(getBluetoothAdapter().getBondedDevices());
-			
+		} else {
+			eventListener.bluetoothEventChange(BluetoothHelperEvent.NOT_SUPPORTED);//notify there is not support for bluetooth
 		}
 		
 		return pairedDevices;
 	}
 	
-	
+	public BluetoothHelper discover() {
+		
+		
+		
+		return this;
+	}
 	
 	public BluetoothHelper setOnBuetoothHelperEventListener (BluetoothHelperEventListener eventListener) {
 		this.eventListener = eventListener;
@@ -61,7 +70,7 @@ public class BluetoothHelper {
 	}
 	
 	public interface BluetoothHelperEventListener {
-		public void bluetoothNotEnable(BluetoothHelper helper);
+		public void bluetoothEventChange(BluetoothHelperEvent event);
 		public void bluetoothConnectionStart(ConnectThread connection);
 	}
 

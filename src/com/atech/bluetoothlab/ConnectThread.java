@@ -10,6 +10,8 @@ import android.util.Log;
 
 public class ConnectThread extends Thread {
 
+	private static final String TAG = "ConnectThread";
+	
 	private BluetoothSocket socket;
 	private BluetoothDevice device;
 	private BluetoothAdapter adapter;
@@ -33,7 +35,7 @@ public class ConnectThread extends Thread {
 
 	@Override
 	public void run() {
-		if (adapter != null) {
+		if (adapter != null && adapter.isDiscovering()) {
 			// before doing a connect if an adapter was set to us we cancel the
 			// discovery of any new devices
 			adapter.cancelDiscovery();
@@ -44,7 +46,8 @@ public class ConnectThread extends Thread {
 			// until it succeeds or throws an exception
 			socket.connect();
 		} catch (IOException connectException) {
-			connectException.printStackTrace();
+			Log.e(TAG,"connection could not be stablished due to: " + connectException.getMessage());
+			
 			cancel();
 			return;
 		}

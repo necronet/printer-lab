@@ -5,7 +5,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import com.atech.bluetoothlab.BluetoothHelper.BluetoothHelperEvent;
 import com.atech.bluetoothlab.BluetoothHelper.BluetoothHelperEventListener;
 
 public class PrinterListFragment extends Fragment implements OnItemClickListener, BluetoothHelperEventListener{
@@ -33,13 +33,17 @@ public class PrinterListFragment extends Fragment implements OnItemClickListener
 		
 		adapter = new BluetoothPrinterAdapter(getActivity(), helper.getPairedDevices());
 		list.setAdapter(adapter);
-		list.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+		list.setChoiceMode(isTablet()? ListView.CHOICE_MODE_SINGLE : ListView.CHOICE_MODE_NONE);
 		list.setOnItemClickListener(this);
 		
 		
 		return view;
 	}
 	
+	private boolean isTablet() {
+		return getResources().getBoolean(R.bool.is_tablet);
+	}
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == REQUEST_ENABLE_BT) {
@@ -65,9 +69,22 @@ public class PrinterListFragment extends Fragment implements OnItemClickListener
 	
 	//in case that bluetooth is not enabled
 	@Override
-	public void bluetoothNotEnable(BluetoothHelper helper) {
-		Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-	    startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+	public void bluetoothEventChange(BluetoothHelperEvent event) {
+		
+		switch(event) {
+		case NOT_ENABLED:
+			Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+		    startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+		    break;
+		case NOT_SUPPORTED:
+			//if there is no bluetooth
+			break;
+		}
+	}
+
+	@Override
+	public void bluetoothConnectionStart(ConnectThread connection) {
+		
 	}
 	
 	
