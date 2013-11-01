@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1"
+	 id="svg4376" inkscape:version="0.41+cvs" sodipodi:docbase="/home/jimmac/gfx/ximian/tango-desktop-theme/scalable/emotes" sodipodi:docname="face-sad.svg" sodipodi:version="0.32" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://web.resource.org/cc/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns:sodipodi="http://inkscape.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="48px" height="48px"
+	 viewBox="0 0 48 48" enable-background="new 0 0 48 48" xml:space="preserve">
+<sodipodi:namedview  inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:grid-bbox="true" inkscape:window-height="739" inkscape:window-x="223" inkscape:window-y="184" inkscape:document-units="px" inkscape:showpageshadow="false" inkscape:current-layer="layer1" inkscape:window-width="700" fill="#edd400" id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="0.19607843" inkscape:zoom="11.313708" inkscape:cx="25.411306" inkscape:cy="24.058534" showgrid="false">
+	</sodipodi:namedview>
+<g id="layer1" inkscape:groupmode="layer" inkscape:label="Layer 1">
+	
+		<radialGradient id="path4320_1_" cx="172.9189" cy="-153.5571" r="8.9027" fx="172.7893" fy="-153.5224" gradientTransform="matrix(2.0831 0 0 -2.0831 -339.7536 -303.6249)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#FFFCDE"/>
+		<stop  offset="0.6449" style="stop-color:#F6E76A"/>
+		<stop  offset="1" style="stop-color:#FFB738"/>
+	</radialGradient>
+	
+		<path id="path4320" sodipodi:ry="8.6620579" sodipodi:rx="8.6620579" sodipodi:cy="19.008621" sodipodi:cx="31.112698" sodipodi:type="arc" fill="url(#path4320_1_)" d="
+		M42.309,23.105c0.006,9.965-8.068,18.049-18.034,18.054S6.226,33.09,6.221,23.124c0-0.006,0-0.012,0-0.019
+		C6.216,13.14,14.29,5.057,24.256,5.052c9.965-0.005,18.049,8.069,18.053,18.035C42.309,23.093,42.309,23.099,42.309,23.105z"/>
+	
+		<path id="path4322" sodipodi:ry="8.6620579" sodipodi:rx="8.6620579" sodipodi:cy="19.008621" sodipodi:cx="31.112698" sodipodi:type="arc" opacity="0.6772" fill="none" stroke="#FFFFFF" stroke-width="0.5051" stroke-linecap="round" stroke-linejoin="round" enable-background="new    " d="
+		M41.414,23.105c0.005,9.471-7.669,17.152-17.14,17.158c-9.471,0.004-17.153-7.67-17.158-17.141c0-0.006,0-0.012,0-0.018
+		c-0.005-9.471,7.669-17.153,17.14-17.158s17.153,7.669,17.158,17.14C41.414,23.094,41.414,23.1,41.414,23.105z"/>
+	<path id="path1387" sodipodi:nodetypes="czczc" opacity="0.36" fill="#FFFFFF" enable-background="new    " d="M34.014,32.037
+		c-3.723-4.164-5.562-5.631-9.551-5.631c-3.901,0-6.5,1.688-9.375,5.984c3.434-2.35,5.31-3.65,9.11-3.65
+		C27.909,28.74,29.948,29.791,34.014,32.037z"/>
+	<path id="path8606" sodipodi:nodetypes="czczc" opacity="0.8" d="M34.014,31.376c-3.723-3.121-5.562-4.221-9.551-4.221
+		c-3.901,0-6.5,1.266-9.375,4.485c3.434-1.761,5.31-2.735,9.11-2.735C27.91,28.905,29.949,29.692,34.014,31.376z"/>
+	<g id="g8666" transform="translate(0.353553,2.392706)" opacity="0.8">
+		<path id="path8610" opacity="0.36" enable-background="new    " d="M21.564,16.727c0,1.753-1.125,3.156-2.5,3.156
+			s-2.625-1.403-2.625-3.156c0-1.753,1.125-3.156,2.5-3.156s2.5,1.402,2.5,3.156H21.564z"/>
+		<path id="path8612" opacity="0.36" enable-background="new    " d="M30.854,16.727c0,1.753-1.125,3.156-2.5,3.156
+			s-2.5-1.403-2.5-3.156c0-1.753,1.125-3.156,2.5-3.156S30.854,14.974,30.854,16.727z"/>
+		<path id="path8614" d="M21.564,16.289c0,1.753-1.125,3.156-2.5,3.156s-2.5-1.402-2.5-3.156c0-1.753,1.125-3.156,2.5-3.156
+			S21.564,14.536,21.564,16.289z"/>
+		<path id="path8616" d="M30.854,16.289c0,1.753-1.125,3.156-2.5,3.156s-2.5-1.402-2.5-3.156c0-1.753,1.125-3.156,2.5-3.156
+			S30.854,14.536,30.854,16.289z"/>
+	</g>
+</g>
+</svg>
