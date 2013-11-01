@@ -1,5 +1,6 @@
 package com.atech.bluetoothlab;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -13,7 +14,8 @@ public class BluetoothHelper {
 	private static final String[] SUPPORTED_DEVICES = {"APEX3"};
 	public enum BluetoothHelperEvent {
 		NOT_SUPPORTED,
-		NOT_ENABLED;
+		NOT_ENABLED,
+		CONNECTION_FAILED;
 	}
 	
 	private static BluetoothHelper instance;
@@ -83,7 +85,7 @@ public class BluetoothHelper {
 			if (connection != null) //if there is another connection open cancel that one
 				connection.cancel();
 			
-			connection = new ConnectThread(device, uuid).withBluetoothAdapter(getBluetoothAdapter());
+			connection = new ConnectThread(device, uuid);
 			connection.start();
 			
 			if (eventListener != null) {
@@ -95,6 +97,19 @@ public class BluetoothHelper {
 			//notify when new uuids were discovered
 			device.fetchUuidsWithSdp();
 		}
+	}
+
+	public void connectionFailed(IOException connectException) {
+		if (eventListener != null) {
+			//notify that a connection started
+			eventListener.bluetoothEventChange(BluetoothHelperEvent.CONNECTION_FAILED);
+		}
+	}
+
+	public void destroy() {
+		if (connection != null) //if there is another connection open cancel that one
+			connection.cancel();
+		instance = null; //we remove this instance	
 	}
 
 	

@@ -38,12 +38,19 @@ public class PrinterActionListFragment extends Fragment implements
 		Bundle args = getArguments();
 		if (args != null && args.containsKey("selected")) 
 		{
-			displayActions();
+			connectingToDevice();
 		}
+	}
+	
+	public void connectingToDevice() {
+		getView().findViewById(R.id.empty).setVisibility(View.GONE);
+		getView().findViewById(R.id.list).setVisibility(View.GONE);
+		getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
 	}
 
 	public void displayActions() {
 		getView().findViewById(R.id.empty).setVisibility(View.GONE);
+		getView().findViewById(R.id.progress).setVisibility(View.GONE);
 		getView().findViewById(R.id.list).setVisibility(View.VISIBLE);
 	}
 

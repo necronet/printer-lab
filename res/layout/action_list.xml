@@ -13,9 +13,33 @@
         android:id="@+id/empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:fontFamily="sans-serif-light"
-        android:textSize="24sp"
-        android:text="@string/empty_action" />
+        android:gravity="center"
+        android:text="@string/empty_action"
+        android:textSize="24sp" />
+
+    <LinearLayout
+        android:id="@+id/progress"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            
+             />
+
+        <TextView
+            android:id="@+id/progress_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:text="@string/starting_connection"
+            android:textSize="24sp" />
+    </LinearLayout>
 
 </FrameLayout>

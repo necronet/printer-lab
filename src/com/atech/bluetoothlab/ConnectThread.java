@@ -14,7 +14,6 @@ public class ConnectThread extends Thread {
 	
 	private BluetoothSocket socket;
 	private BluetoothDevice device;
-	private BluetoothAdapter adapter;
 
 	public ConnectThread(BluetoothDevice device, UUID deviceUUID) {
 		BluetoothSocket tmp = null;
@@ -28,17 +27,14 @@ public class ConnectThread extends Thread {
 		socket = tmp;
 	}
 
-	public ConnectThread withBluetoothAdapter(BluetoothAdapter adapter) {
-		this.adapter = adapter;
-		return this;
-	}
 
 	@Override
 	public void run() {
-		if (adapter != null && adapter.isDiscovering()) {
+		BluetoothHelper helper = BluetoothHelper.instance();
+		if (helper != null && helper.getBluetoothAdapter().isDiscovering()) {
 			// before doing a connect if an adapter was set to us we cancel the
 			// discovery of any new devices
-			adapter.cancelDiscovery();
+			helper.getBluetoothAdapter().cancelDiscovery();
 		}
 
 		try {
@@ -47,7 +43,7 @@ public class ConnectThread extends Thread {
 			socket.connect();
 		} catch (IOException connectException) {
 			Log.e(TAG,"connection could not be stablished due to: " + connectException.getMessage());
-			
+			helper.connectionFailed(connectException);
 			cancel();
 			return;
 		}

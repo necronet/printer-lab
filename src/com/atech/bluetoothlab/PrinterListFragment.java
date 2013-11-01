@@ -1,7 +1,6 @@
 package com.atech.bluetoothlab;
 
 import android.app.Activity;
-import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,13 +11,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import com.atech.bluetoothlab.BluetoothHelper.BluetoothHelperEvent;
-import com.atech.bluetoothlab.BluetoothHelper.BluetoothHelperEventListener;
-
-public class PrinterListFragment extends Fragment implements OnItemClickListener, BluetoothHelperEventListener{
+public class PrinterListFragment extends Fragment implements OnItemClickListener{
 
 	private static final String TAG = "DEBUG ";  
-	private static final int REQUEST_ENABLE_BT = 200;
 	private BluetoothPrinterAdapter adapter;
 	private ListView list; 
 	
@@ -29,7 +24,7 @@ public class PrinterListFragment extends Fragment implements OnItemClickListener
 		View view = inflater.inflate(R.layout.printer_list, container, false);
 		list = (ListView) view.findViewById(R.id.list);
 		
-		BluetoothHelper helper = BluetoothHelper.instance().setOnBuetoothHelperEventListener(this);;
+		BluetoothHelper helper = BluetoothHelper.instance();
 		
 		adapter = new BluetoothPrinterAdapter(getActivity(), helper.getPairedDevices());
 		list.setAdapter(adapter);
@@ -44,48 +39,15 @@ public class PrinterListFragment extends Fragment implements OnItemClickListener
 		return getResources().getBoolean(R.bool.is_tablet);
 	}
 
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == REQUEST_ENABLE_BT) {
-			switch(resultCode) {
-				case Activity.RESULT_OK:
-					//handle okish state
-					break;
-				case Activity.RESULT_CANCELED:
-					//handle cancellation
-					break;
-					
-			}
-		}
-		super.onActivityResult(requestCode, resultCode, data);
-	}
-
+	
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 		list.setItemChecked(position, true);
 		((PrinterActivity)getActivity()).deviceSelected(adapter.getItem(position));
 	}
 
-	
-	//in case that bluetooth is not enabled
-	@Override
-	public void bluetoothEventChange(BluetoothHelperEvent event) {
-		
-		switch(event) {
-		case NOT_ENABLED:
-			Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-		    startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-		    break;
-		case NOT_SUPPORTED:
-			//if there is no bluetooth
-			break;
-		}
-	}
 
-	@Override
-	public void bluetoothConnectionStart(ConnectThread connection) {
-		
-	}
+	
 	
 	
 	
