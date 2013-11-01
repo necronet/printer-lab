@@ -12,9 +12,11 @@ public class BluetoothHelper {
 
 	private static final String[] SUPPORTED_DEVICES = {"APEX3"};
 	
+	
 	private static BluetoothHelper instance;
 	private BluetoothAdapter mBluetoothAdapter;
 	private BluetoothHelperEventListener eventListener;
+	private ConnectThread connection;
 
 	private BluetoothHelper() {}
 
@@ -67,7 +69,12 @@ public class BluetoothHelper {
 		ParcelUuid uuids[] = device.getUuids();
 		if (uuids != null && uuids.length > 0) {
 			UUID uuid = uuids[0].getUuid();//uuid to connect
-			ConnectThread connection = new ConnectThread(device, uuid).withBluetoothAdapter(getBluetoothAdapter());
+			
+			
+			if (connection != null) //if there is another connection open cancel that one
+				connection.cancel();
+			
+			connection = new ConnectThread(device, uuid).withBluetoothAdapter(getBluetoothAdapter());
 			connection.start();
 			
 			if (eventListener != null) {
