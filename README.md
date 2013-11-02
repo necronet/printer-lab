@@ -5,12 +5,11 @@ Lab project to make test in connection with bluetooth printer, specificly POS pr
 
 <img src="ic_launcher-web.png" width="300px">
 
+Usful resources
 
-Useful resources:
+- [Apex Developer Guide](http://www.datamax-oneil.com/do/sp/sp-sp/file.cfm/7A300007_Rev2.pdf?contentID=7122&ext=.pdf) Since the test are made through an apex3 this came very handy.
 
-
-
-http://nicholas.piasecki.name/blog/wp-content/uploads/2009/12/ESC-POS-Command-Guide.pdf
+- [ESC POS command guide](http://nicholas.piasecki.name/blog/wp-content/uploads/2009/12/ESC-POS-Command-Guide.pdf)
 
 
 ##Licence
