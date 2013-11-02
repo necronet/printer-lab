@@ -7,7 +7,7 @@
     <string name="connection_failed">Connection failed</string>
     
     <string-array name="actions">
-        <item>Print Hello world</item>
+        <item>Multiple Hello world lines</item>
         <item>Print an invoice</item>
         <item>Print an invoice with barcode</item>
         <item>Print an invoice with an image</item>

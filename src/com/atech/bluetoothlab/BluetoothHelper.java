@@ -25,6 +25,7 @@ public class BluetoothHelper {
 	private BluetoothAdapter mBluetoothAdapter;
 	private BluetoothHelperEventListener eventListener;
 	private ConnectThread connection;
+	private PrinterWriterThread writerThread;
 
 	private BluetoothHelper() {
 	}
@@ -80,6 +81,12 @@ public class BluetoothHelper {
 		public void bluetoothConnectionStart(ConnectThread connection);
 	}
 
+	/**
+	 * Will test out wether a connection to a specific device can be stablished
+	 * will not sent any data and will not keep the connection open for too
+	 * long, it is only for the purposes of ensure that the device is in there.
+	 * 
+	 * */
 	public void connectTo(BluetoothDevice device) {
 		ParcelUuid uuids[] = device.getUuids();
 		if (uuids != null && uuids.length > 0) {
@@ -110,7 +117,7 @@ public class BluetoothHelper {
 	}
 
 	public static final int CONNECTED = 0, CONNECTION_LOST = -1, CONNECTION_FAILED = 2, CANCEL_DISCOVERY = 3,
-			CONNECTION_START = 5;
+			CONNECTION_START = 5, READ = 6, WRITE = 7;
 
 	private Handler mHandler = new Handler() {
 		@Override
@@ -123,12 +130,27 @@ public class BluetoothHelper {
 				}
 				break;
 
+			case READ:
+				byte[] readBuf = (byte[]) msg.obj;
+				// construct a string from the valid bytes in the buffer
+				String readMessage = new String(readBuf, 0, msg.arg1);
+				Log.d(TAG, "Message: " + readMessage);
+				break;
+				
+			case WRITE:
+				
+				break;
+
 			case CONNECTED:
-				connection = null;//since we stop using the connection we nullified it
-				
-				BluetoothSocket socket = (BluetoothSocket)msg.obj;
+
+				BluetoothSocket socket = (BluetoothSocket) msg.obj;
+
+				connection = null;
+
+				startWritingThread(socket);
+
 				eventListener.bluetoothEventChange(BluetoothHelperEvent.CONNECTION_STABLISHED);
-				
+
 				break;
 			case CANCEL_DISCOVERY:
 				if (getBluetoothAdapter().isDiscovering())
@@ -137,11 +159,12 @@ public class BluetoothHelper {
 					getBluetoothAdapter().cancelDiscovery();
 				break;
 			case CONNECTION_LOST:
+				Log.d(TAG, "Connection was lost");
 				break;
 			case CONNECTION_FAILED:
 				if (eventListener != null) {
 					// notify that a connection started
-					Log.e(TAG,"Notifying connection failed!");
+					Log.e(TAG, "Notifying connection failed!");
 					eventListener.bluetoothEventChange(BluetoothHelperEvent.CONNECTION_FAILED);
 				}
 				break;
@@ -149,5 +172,24 @@ public class BluetoothHelper {
 			}
 		}
 	};
+
+	public void startWritingThread(BluetoothSocket socket) {
+
+		if (writerThread != null) {
+			writerThread.cancel();
+			writerThread = null;
+		}
+
+		writerThread = new PrinterWriterThread(socket, mHandler);
+		writerThread.start();
+	}
+	
+	public void sendData(byte[] data) {
+		if (writerThread != null) {
+			Log.d(TAG, "sent to writer Thread data");
+			writerThread.write(data);
+		}
+	}
+	
 
 }

@@ -1,7 +1,10 @@
 package com.atech.bluetoothlab;
 
+import java.nio.ByteBuffer;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,7 @@ import android.widget.TextView;
 public class PrinterActionListFragment extends Fragment implements
 		OnItemClickListener {
 
+	private static final String TAG = "PrinterActionListFragment";
 	private ArrayAdapter<String> adapter;
 	private TextView textProgress;
 	private boolean displayActions = false;
@@ -85,6 +89,21 @@ public void onSaveInstanceState(Bundle outState) {
 	public void onItemClick(AdapterView<?> av, View v, int pos, long id) {
 		switch (pos) {
 		case 0: // hello world example
+			Log.d(TAG, "Listview sending data");
+			//this are not magic number 
+			//more PCL first try to format letter
+			
+			byte[] data = new byte[1024];
+			ByteBuffer dataBuffer = ByteBuffer.wrap(data);
+			for(int i = 0; i < 10 ; i ++) {
+				byte[] options = {27, 107, (byte)(48 + i)};
+				byte[] text = getCharacters(5);
+				dataBuffer.put(options);
+				dataBuffer.put(text);
+				Log.d(TAG, "data: " +options.length + " text " + text.length );
+			}	
+			Log.d(TAG, "dataarray: " + dataBuffer.array().length);
+			BluetoothHelper.instance().sendData(dataBuffer.array());
 			break;
 		case 1: // printing invoice
 			break;
@@ -93,6 +112,15 @@ public void onSaveInstanceState(Bundle outState) {
 		case 3:// printing invoice images
 			break;
 		}
+	}
+	
+	private byte[] getCharacters(int limit) {
+		StringBuffer dataBuffer = new StringBuffer();
+		for (int i = 0 ;i < limit; i ++) {
+			dataBuffer.append("Hello world ");
+		}
+		
+		return dataBuffer.toString().getBytes();
 	}
 
 }
