@@ -6,6 +6,7 @@ import java.util.UUID;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
 public class ConnectThread extends Thread {
@@ -47,7 +48,12 @@ public class ConnectThread extends Thread {
 			cancel();
 			return;
 		}
-
+		
+		Message msg = mHandler.obtainMessage();
+		msg.what = BluetoothHelper.CONNECTED;
+		msg.obj = mSocket;
+		mHandler.sendMessage(msg);
+		
 	}
 
 	/** Will cancel an in-progress connection, and close the socket */

@@ -92,13 +92,13 @@ public class PrinterActivity extends FragmentActivity implements BluetoothHelper
 			// if there is no bluetooth
 			break;
 		case CONNECTION_FAILED:
+		case CONNECTION_STABLISHED:
 			// when connection failed
-
 			PrinterActionListFragment actionFragment = (PrinterActionListFragment) getSupportFragmentManager().findFragmentById(
 					isTablet() ? R.id.sub_main : R.id.main);
 
 			if (actionFragment != null) {
-				actionFragment.displayActions(true);
+				actionFragment.displayActions(event == BluetoothHelperEvent.CONNECTION_FAILED);
 			}
 			break;
 		}

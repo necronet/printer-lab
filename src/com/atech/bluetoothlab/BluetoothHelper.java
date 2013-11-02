@@ -1,17 +1,16 @@
 package com.atech.bluetoothlab;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
 import android.os.Message;
 import android.os.ParcelUuid;
 import android.util.Log;
-import android.widget.Toast;
 
 public class BluetoothHelper {
 
@@ -19,7 +18,7 @@ public class BluetoothHelper {
 	private static final String[] SUPPORTED_DEVICES = { "APEX3" };
 
 	public enum BluetoothHelperEvent {
-		NOT_SUPPORTED, NOT_ENABLED, CONNECTION_FAILED;
+		NOT_SUPPORTED, NOT_ENABLED, CONNECTION_STABLISHED, CONNECTION_FAILED;
 	}
 
 	private static BluetoothHelper instance;
@@ -125,6 +124,11 @@ public class BluetoothHelper {
 				break;
 
 			case CONNECTED:
+				connection = null;//since we stop using the connection we nullified it
+				
+				BluetoothSocket socket = (BluetoothSocket)msg.obj;
+				eventListener.bluetoothEventChange(BluetoothHelperEvent.CONNECTION_STABLISHED);
+				
 				break;
 			case CANCEL_DISCOVERY:
 				if (getBluetoothAdapter().isDiscovering())
