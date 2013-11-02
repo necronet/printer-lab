@@ -6,6 +6,13 @@ Lab project to make test in connection with bluetooth printer, specificly POS pr
 <img src="ic_launcher-web.png" width="300px">
 
 
+Useful resources:
+
+
+
+http://nicholas.piasecki.name/blog/wp-content/uploads/2009/12/ESC-POS-Command-Guide.pdf
+
+
 ##Licence
 
 The MIT License (MIT)
